@@ -1,0 +1,48 @@
+# Create this .dockerignore file in each directory (admin, frontend, backend)
+
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production builds (for source directories)
+build
+dist
+.next
+
+# Environment files (commented out since we need .env files)
+# .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Logs
+logs
+*.log
+
+# Coverage
+coverage
+
+# Testing
+.nyc_output

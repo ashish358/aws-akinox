@@ -1,0 +1,253 @@
+apiVersion: v1
+data:
+  .dockerignore: |-
+    node_modules
+    npm-debug.log
+    .git
+    .gitignore
+    README.md
+    .env.local
+    .env.development.local
+    .env.test.local
+    .env.production.local
+    build
+  .env: |
+    VITE_BACKEND_URL=http://localhost:4000
+  .gitignore: |
+    # Logs
+    logs
+    *.log
+    npm-debug.log*
+    yarn-debug.log*
+    yarn-error.log*
+    pnpm-debug.log*
+    lerna-debug.log*
+
+    node_modules
+    dist
+    dist-ssr
+    *.local
+    .env
+
+    # Editor directories and files
+    .vscode/*
+    !.vscode/extensions.json
+    .idea
+    .DS_Store
+    *.suo
+    *.ntvs*
+    *.njsproj
+    *.sln
+    *.sw?
+  Dockerfile: |-
+    FROM node:18-alpine
+
+    WORKDIR /app
+
+    # Copy package files
+    COPY package*.json ./
+
+    # Install dependencies
+    RUN npm install
+
+    # Copy source code
+    COPY . .
+
+    # Expose port
+    EXPOSE 5174
+
+    # Start the application (Vite dev server)
+    CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+  README.md: |+
+    # AkinoxAdmin - Akinox Watches Admin Panel
+
+    ## Overview
+    AkinoxAdmin is the **React.js-based admin dashboard** for the Akinox Watches E-Commerce Platform. It provides a centralized interface for managing products, orders, users, and other crucial aspects of the e-commerce platform.
+
+    ## Features
+    - **Admin Authentication** (Secure login with JWT authentication)
+    - **Dashboard Overview** (Insights on orders, users, and sales)
+    - **Product Management** (Add, edit, delete watches)
+    - **Order Management** (Track & update order status)
+    - **User Management** (View and manage customers & admins)
+
+    ## Tech Stack
+    - **Frontend:** React.js, Redux Toolkit, Tailwind CSS
+    - **Backend:** Node.js, Express.js (Connected to AkinoxBackend API)
+    - **State Management:** Redux Toolkit
+    - **Authentication:** JWT (JSON Web Tokens)
+    - **API Handling:** Axios
+    - **Data Visualization:** Chart.js
+
+    ## Installation & Setup
+    ### Prerequisites
+    - Node.js & npm installed
+    - Backend API running ([AkinoxBackend](https://github.com/KGD2417/AkinoxBackend))
+
+    ### Clone the Repository
+    ```sh
+    git clone https://github.com/KGD2417/AkinoxAdmin.git
+    cd AkinoxAdmin
+    ```
+
+    ### Install Dependencies
+    ```sh
+    npm install
+    ```
+
+    ### Run the Admin Panel
+    ```sh
+    npm start
+    ```
+
+    ## Folder Structure
+    ```
+    src/
+    │── components/       # Reusable UI components
+    │── pages/           # Main pages (Dashboard, Products, Orders, Users)
+    │── redux/           # State management (slices, store)
+    │── api/             # API request handlers
+    │── assets/          # Images and icons
+    │── styles/          # Tailwind and custom styles
+    ```
+
+    ## Contributing
+    1. Fork the repository.
+    2. Create a new branch: `git checkout -b feature-branch`
+    3. Commit changes: `git commit -m 'Add new feature'`
+    4. Push to the branch: `git push origin feature-branch`
+    5. Open a Pull Request.
+
+    ## License
+    This project is licensed under the MIT License.
+
+    ## Contact
+    For any queries, contact [your email or GitHub profile link].
+
+  eslint.config.js: |
+    import js from '@eslint/js'
+    import globals from 'globals'
+    import react from 'eslint-plugin-react'
+    import reactHooks from 'eslint-plugin-react-hooks'
+    import reactRefresh from 'eslint-plugin-react-refresh'
+
+    export default [
+      { ignores: ['dist'] },
+      {
+        files: ['**/*.{js,jsx}'],
+        languageOptions: {
+          ecmaVersion: 2020,
+          globals: globals.browser,
+          parserOptions: {
+            ecmaVersion: 'latest',
+            ecmaFeatures: { jsx: true },
+            sourceType: 'module',
+          },
+        },
+        settings: { react: { version: '18.3' } },
+        plugins: {
+          react,
+          'react-hooks': reactHooks,
+          'react-refresh': reactRefresh,
+        },
+        rules: {
+          ...js.configs.recommended.rules,
+          ...react.configs.recommended.rules,
+          ...react.configs['jsx-runtime'].rules,
+          ...reactHooks.configs.recommended.rules,
+          'react/jsx-no-target-blank': 'off',
+          'react-refresh/only-export-components': [
+            'warn',
+            { allowConstantExport: true },
+          ],
+        },
+      },
+    ]
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Akinox Admin Panel</title>
+      </head>
+      <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
+      </body>
+    </html>
+  package.json: |
+    {
+      "name": "admin",
+      "private": true,
+      "version": "0.0.0",
+      "type": "module",
+      "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "start": "vite preview"
+      },
+      "dependencies": {
+        "axios": "^1.7.9",
+        "lucide-react": "^0.474.0",
+
+        "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+
+        "react-router-dom": "^7.1.5",
+        "react-toastify": "^11.0.3",
+        "rollup": "^4.46.2"
+      },
+      "devDependencies": {
+        "@eslint/js": "^9.17.0",
+        "@types/react": "^18.3.18",
+        "@types/react-dom": "^18.3.5",
+        "@vitejs/plugin-react": "^4.3.4",
+        "autoprefixer": "^10.4.20",
+        "eslint": "^9.17.0",
+        "eslint-plugin-react": "^7.37.2",
+        "eslint-plugin-react-hooks": "^5.0.0",
+        "eslint-plugin-react-refresh": "^0.4.16",
+        "globals": "^15.14.0",
+        "postcss": "^8.5.1",
+        "tailwindcss": "^3.4.17",
+        "vite": "^6.3.5"
+      }
+    }
+  postcss.config.js: |
+    export default {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    }
+  tailwind.config.js: |+
+    /** @type {import('tailwindcss').Config} */
+    export default {
+      content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+      ],
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+    }
+
+  vite.config.js: |
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+
+    // https://vite.dev/config/
+    export default defineConfig({
+      plugins: [react()],
+      server: {port:5174}
+    })
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: admin
+  name: admin-cm0

@@ -1,0 +1,257 @@
+apiVersion: v1
+data:
+  .dockerignore: |-
+    node_modules
+    npm-debug.log
+    .git
+    .gitignore
+    README.md
+    .env.local
+    build
+  .env: |
+    VITE_BACKEND_URL=http://localhost:4000
+  .gitignore: |
+    # Logs
+    logs
+    *.log
+    npm-debug.log*
+    yarn-debug.log*
+    yarn-error.log*
+    pnpm-debug.log*
+    lerna-debug.log*
+
+    node_modules
+    dist
+    dist-ssr
+    *.local
+    .env
+
+    # Editor directories and files
+    .vscode/*
+    !.vscode/extensions.json
+    .idea
+    .DS_Store
+    *.suo
+    *.ntvs*
+    *.njsproj
+    *.sln
+    *.sw?
+  Dockerfile: |-
+    FROM node:18-alpine
+
+    WORKDIR /app
+
+    # Copy package files
+    COPY package*.json ./
+
+    # Install dependencies
+    RUN npm install
+
+    # Copy source code
+    COPY . .
+
+    # Expose port
+    EXPOSE 5173
+
+    # Start the application (Vite dev server)
+    CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+  README.md: |+
+    # AkinoxFrontend - Akinox Watches E-Commerce Platform
+
+    ## Overview
+    AkinoxFrontend is the **React.js-based frontend** for the Akinox Watches E-Commerce Platform. This project provides a seamless and intuitive shopping experience, allowing users to browse, purchase, and manage high-end watches.
+
+    ## Features
+    - **User Authentication** (Login/Register with JWT Authentication)
+    - **Product Browsing** (View watches, search & filter options)
+    - **Shopping Cart & Checkout** (Add items, manage cart, place orders)
+    - **User Dashboard** (Order history, profile management)
+    - **Payment Integration** (Stripe/Razorpay integration)
+    - **Responsive UI** (Optimized for mobile & desktop)
+
+    ## Tech Stack
+    - **Frontend:** React.js, Redux Toolkit, Tailwind CSS
+    - **State Management:** Redux Toolkit
+    - **Routing:** React Router
+    - **API Handling:** Axios
+    - **Authentication:** JWT (JSON Web Tokens)
+
+    ## Installation & Setup
+    ### Prerequisites
+    - Node.js & npm installed
+    - Backend API running ([AkinoxBackend](https://github.com/KGD2417/AkinoxBackend))
+
+    ### Clone the Repository
+    ```sh
+    git clone https://github.com/KGD2417/AkinoxFrontend.git
+    cd AkinoxFrontend
+    ```
+
+    ### Install Dependencies
+    ```sh
+    npm install
+    ```
+
+    ### Run the Application
+    ```sh
+    npm start
+    ```
+
+    ## Folder Structure
+    ```
+    src/
+    │── components/         # Reusable UI components
+    │── pages/             # Main pages (Home, Product, Checkout, etc.)
+    │── redux/             # State management (slices, store)
+    │── api/               # API request handlers
+    │── assets/            # Images and icons
+    │── styles/            # Tailwind and custom styles
+    ```
+
+    ## Contributing
+    1. Fork the repository.
+    2. Create a new branch: `git checkout -b feature-branch`
+    3. Commit changes: `git commit -m 'Add new feature'`
+    4. Push to the branch: `git push origin feature-branch`
+    5. Open a Pull Request.
+
+    ## License
+    This project is licensed under the MIT License.
+
+    ## Contact
+    For any queries, contact kshitijdesai179@gmail.com.
+
+  eslint.config.js: |
+    import js from '@eslint/js'
+    import globals from 'globals'
+    import react from 'eslint-plugin-react'
+    import reactHooks from 'eslint-plugin-react-hooks'
+    import reactRefresh from 'eslint-plugin-react-refresh'
+
+    export default [
+      { ignores: ['dist'] },
+      {
+        files: ['**/*.{js,jsx}'],
+        languageOptions: {
+          ecmaVersion: 2020,
+          globals: globals.browser,
+          parserOptions: {
+            ecmaVersion: 'latest',
+            ecmaFeatures: { jsx: true },
+            sourceType: 'module',
+          },
+        },
+        settings: { react: { version: '18.3' } },
+        plugins: {
+          react,
+          'react-hooks': reactHooks,
+          'react-refresh': reactRefresh,
+        },
+        rules: {
+          ...js.configs.recommended.rules,
+          ...react.configs.recommended.rules,
+          ...react.configs['jsx-runtime'].rules,
+          ...reactHooks.configs.recommended.rules,
+          'react/jsx-no-target-blank': 'off',
+          'react-refresh/only-export-components': [
+            'warn',
+            { allowConstantExport: true },
+          ],
+        },
+      },
+    ]
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/frontend/src/index.css">
+        <title>Akinox</title>
+      </head>
+      <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
+      </body>
+    </html>
+  package.json: |
+    {
+      "name": "frontend",
+      "private": true,
+      "version": "0.0.0",
+      "type": "module",
+      "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "start": "vite preview"
+      },
+      "dependencies": {
+        "@fortawesome/free-brands-svg-icons": "^6.7.2",
+        "@fortawesome/free-regular-svg-icons": "^6.7.2",
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
+        "axios": "^1.7.9",
+        "hamburger-react": "^2.5.2",
+        "lucide-react": "^0.474.0",
+        "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+    ,
+        "react-icons": "^5.5.0",
+        "react-router-dom": "^7.1.5",
+        "react-toastify": "^11.0.3",
+        "rollup": "^4.46.2"
+      },
+      "devDependencies": {
+        "@eslint/js": "^9.17.0",
+        "@types/react": "^18.3.18",
+        "@types/react-dom": "^18.3.5",
+        "@vitejs/plugin-react": "^4.3.4",
+        "autoprefixer": "^10.4.20",
+        "eslint": "^9.17.0",
+        "eslint-plugin-react": "^7.37.2",
+        "eslint-plugin-react-hooks": "^5.0.0",
+        "eslint-plugin-react-refresh": "^0.4.16",
+        "globals": "^15.14.0",
+        "postcss": "^8.5.1",
+        "tailwindcss": "^3.4.17",
+        "vite": "^6.3.5"
+      }
+    }
+  postcss.config.js: |
+    export default {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    }
+  tailwind.config.js: |
+    // tailwind.config.js
+    /** @type {import('tailwindcss').Config} */
+    export default {
+      content: [
+        './index.html',
+        './src/**/*.{js,ts,jsx,tsx}',
+      ],
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+    };
+  vite.config.js: |
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+
+    // https://vite.dev/config/
+    export default defineConfig({
+      plugins: [react()],
+      server:{port:5173}
+    })
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: frontend
+  name: frontend-cm0
